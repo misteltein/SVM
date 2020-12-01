@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
-data = np.loadtxt("sample1.csv",delimiter=",",dtype={'names':('x','y','c'),'formats':(np.float64,np.float,np.int8)})
+data = np.loadtxt("sample1.csv",delimiter=",")
 
-x=data['x']
-y=data['y']
-c=data['c']
+P=data[:,0:3]
+c=data[:,3]
 
-plt.figure()
-plt.xlabel('x')
-plt.ylabel('y')
-plt.scatter(x,y,c=c)
+fig=plt.figure()
+ax=fig.add_subplot(projection='3d')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.scatter(P[:,0],P[:,1],P[:,2],c=c)
 plt.show()
