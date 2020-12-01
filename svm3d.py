@@ -12,8 +12,6 @@ from sklearn.svm import SVC
 model = SVC(kernel='linear',random_state=None)
 model.fit(P,c)
 
-print(model.coef_,model.intercept_)
-
 def minmax(list_):
     min_ = +sys.float_info.max
     max_ = -sys.float_info.max
@@ -24,16 +22,12 @@ def minmax(list_):
             max_ = x
     return min_, max_
 
-minx, maxx = minmax(P[:,0])
-miny, maxy = minmax(P[:,1])
-minz, maxz = minmax(P[:,2])
-
-x_plane = np.arange(-3, 3, 0.1)
-y_plane = np.arange(-3, 3, 0.1)
+x_plane = np.arange(*minmax(P[:,0]), 0.1)
+y_plane = np.arange(*minmax(P[:,1]), 0.1)
 xx_plane, yy_plane = np.meshgrid(x_plane, y_plane)
-coef=model.coef_[0]
-zz_plane = -(coef[0]*xx_plane + coef[1]*yy_plane + model.intercept_) / coef[2]
-
+w=model.coef_[0]
+b=model.intercept_
+zz_plane = -(w[0]*xx_plane + w[1]*yy_plane + b) / w[2]
 
 fig=plt.figure()
 ax=fig.add_subplot(projection='3d')
@@ -41,5 +35,6 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
 ax.scatter(P[:,0],P[:,1],P[:,2],c=c)
-ax.plot_surface(xx_plane, yy_plane, zz_plane)
+ax.plot_surface(xx_plane, yy_plane, zz_plane,alpha=0.5)
 plt.show()
+
