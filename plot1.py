@@ -8,5 +8,7 @@ y=data['y']
 c=data['c']
 
 plt.figure()
+plt.xlabel('x')
+plt.ylabel('y')
 plt.scatter(x,y,c=c)
 plt.show()
