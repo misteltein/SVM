@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 
 data = np.loadtxt('sample2.csv',delimiter=',')
 
-cs = np.logspace(-2,10,13,base=10)
+cs = np.logspace(-2,8,11,base=10)
 gs = np.logspace(-9,3,13,base=10)
 
 scores = {}
@@ -20,7 +20,7 @@ for rs in range(0,1,1):
 
     for g in gs:
         for c in cs:
-            model = svm.SVC(C=c,gamma=g)
+            model = svm.SVC(kernel='rbf',C=c,gamma=g)
             model.fit(X_train,y_train)
             pred_test = model.predict(X_test)
             accuracy_train = accuracy_score(y_test, pred_test)
