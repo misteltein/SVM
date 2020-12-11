@@ -9,9 +9,9 @@ data = np.loadtxt('sample2.csv',delimiter=',')
 
 params = [
         {'C': np.logspace(-2,4,7,base=10), 'kernel':['linear']},
-        {'C': np.logspace(-2,4,7,base=10), 'gamma':np.logspace(-9,1,13,base=10), 'kernel':['rbf']},
-        {'C': np.logspace(-2,4,7,base=10), 'degree':[2,3,4], 'gamma': np.logspace(-9,1,11,base=10), 'kernel':['poly']},
-        {'C': np.logspace(-2,4,7,base=10), 'gamma':np.logspace(-9,1,13,base=10),'kernel':['sigmoid']}
+        {'C': np.logspace(-2,4,7,base=10), 'gamma':np.logspace(-5,1,7,base=10), 'kernel':['rbf']},
+        {'C': np.logspace(-2,4,7,base=10), 'degree':[2,3,4], 'gamma': np.logspace(-5,1,7,base=10), 'kernel':['poly']},
+        {'C': np.logspace(-2,4,7,base=10), 'gamma':np.logspace(-5,1,7,base=10),'kernel':['sigmoid']}
     ]
 
 gscv = GridSearchCV(svm.SVC(),params,cv=5, verbose=3, scoring='accuracy', n_jobs=7 )
