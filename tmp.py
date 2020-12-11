@@ -1,41 +1,26 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from sklearn import svm
-from info import minmax
-from info import plane
-
-data = np.loadtxt("sample2.csv",delimiter=",")
-
-P=data[:,0:3]
-x=P[:,0]
-y=P[:,1]
-z=P[:,2]
-c=data[:,3]
-
-model = svm.LinearSVC(penalty='l2', loss='hinge', dual=True, tol=1e-6)
-model.fit(P,c)
-w = model.coef_[0]
-b = model.intercept_
-
-pred_train = model.predict(P)
+from sklearn import svm 
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-accuracy_train = accuracy_score(c, pred_train)
-print('トレーニングデータに対する正解率： %.2f' % accuracy_train)
 
-fig=plt.figure()
-ax=fig.add_subplot(projection='3d')
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.set_zlabel('z')
-ax.scatter(x,y,z,c=c)
+data = np.loadtxt('sample.csv',delimiter=',')
+data_train, data_test = train_test_split(data,test_size=0.2,random_state=0)
+y_train = data_train[:,2]
+X_train = data_train[:,:2]
+y_test = data_test[:,2]
+X_test = data_test[:,:2]
 
-xx,yy,zz=plane(w,b,minmax(x),minmax(y))
+model = svm.SVC(kernel='linear',C=1.0)
+model.fit(X_train,y_train)
 
-ax.plot_surface(xx,yy,zz,alpha=0.5)
+pred_test = model.predict(X_test)
+accuracy_train = accuracy_score(y_test, pred_test)
+print('推定の正解率： %.2f' % accuracy_train)
 
-# xx=[1.0 for x in xx]
-# ax.plot_surface(xx,yy,zz,alpha=0.5)
-
-plt.show()
-
+#fig = plt.figure()
+#ax = fig.add_subplot()
+#ax.set_xlabel('$x_1$')
+#ax.set_ylabel('$x_2$')
+#plt.scatter(X[:,0],X[:,1],c=y,s=1)
+#plt.show()
