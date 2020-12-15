@@ -13,7 +13,7 @@ params = [
         {'C': np.logspace(0,4,9,base=10), 'kernel':['linear']} 
     ]
 
-gscv = GridSearchCV(svm.SVC(),params,cv=10, verbose=3, scoring='accuracy', n_jobs=8 )
+gscv = GridSearchCV(svm.SVC(),params,cv=10, verbose=3, scoring='accuracy', n_jobs=3 )
 
 data_train, data_test = train_test_split(data,test_size=0.25,random_state=0)
 
@@ -23,6 +23,7 @@ y_test = data_test[:,2].astype(int)
 X_test = data_test[:,:2]
 
 gscv.fit(X_train,y_train)
+
 y_pred = gscv.predict(X_test)
 
 fig = plt.figure()
