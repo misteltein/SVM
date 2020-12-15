@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 from mlxtend.plotting import plot_decision_regions
 
 run_name = 'hoo'
-data = np.loadtxt('sample1.csv',delimiter=',')
+data = np.loadtxt('sampleB.csv',delimiter=',')
 
 params = [
         {'C': np.logspace(-2,4,7,base=10), 'kernel':['linear']}#,
